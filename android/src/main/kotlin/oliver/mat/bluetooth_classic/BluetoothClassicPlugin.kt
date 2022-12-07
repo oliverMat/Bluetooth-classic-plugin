@@ -34,8 +34,13 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(CheckSelfPermission.checkVersion(activity))
         }
 
+        if (call.method == "isEnableBluetooth") {
+            result.success(bluetoothConnection.isEnableBluetooth())
+        }
+
         if (call.method == "enableBluetooth") {
-            result.success(bluetoothConnection.enableBluetooth(activity))
+            bluetoothConnection.enableBluetooth(activity)
+            result.success(true)
         }
 
         if (call.method == "startDeviceDiscovery") {
@@ -48,12 +53,16 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(true)
         }
 
-        if (call.method == "listDevices") {
-            result.success(bluetoothConnection.listDevices())
+        if (call.method == "listNewDevices") {
+            result.success(bluetoothConnection.listNewDevices())
         }
 
         if (call.method == "listPairedDevices") {
-            bluetoothConnection.listPairedDevices()
+            result.success(bluetoothConnection.listPairedDevices())
+        }
+
+        if (call.method == "callPairedDevices") {
+            bluetoothConnection.callPairedDevices()
             result.success(true)
         }
 

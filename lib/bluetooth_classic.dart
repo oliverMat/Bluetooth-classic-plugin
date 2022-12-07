@@ -2,7 +2,6 @@ import 'bluetooth_classic_platform_interface.dart';
 import 'package:bluetooth_classic/model/Device.dart';
 
 class BluetoothClassic {
-
   void initBluetoothAdapter() {
     return BluetoothClassicPlatform.instance.initBluetoothAdapter();
   }
@@ -11,11 +10,15 @@ class BluetoothClassic {
     return BluetoothClassicPlatform.instance.checkPermission();
   }
 
-  Future<bool> enableBluetooth() {
+  Future<bool> isEnableBluetooth() {
+    return BluetoothClassicPlatform.instance.isEnableBluetooth();
+  }
+
+  void enableBluetooth() {
     return BluetoothClassicPlatform.instance.enableBluetooth();
   }
 
-  void startDeviceDiscovery(){
+  void startDeviceDiscovery() {
     return BluetoothClassicPlatform.instance.startDeviceDiscovery();
   }
 
@@ -23,12 +26,16 @@ class BluetoothClassic {
     return BluetoothClassicPlatform.instance.stopDeviceDiscovery();
   }
 
-  Future<List<Device>> listDevices() {
-    return BluetoothClassicPlatform.instance.listDevices();
+  Future<List<Device>> listNewDevices() {
+    return BluetoothClassicPlatform.instance.listNewDevices();
   }
 
-  void listPairedDevices() {
+  Future<List<Device>> listPairedDevices() {
     return BluetoothClassicPlatform.instance.listPairedDevices();
+  }
+
+  void callPairedDevices() {
+    return BluetoothClassicPlatform.instance.callPairedDevices();
   }
 
   void registerBroadcastReceiver() {

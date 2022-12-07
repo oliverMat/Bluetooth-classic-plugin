@@ -32,7 +32,11 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
     throw "Deu error";
   }
 
-  Future<bool> enableBluetooth() {
+  Future<bool> isEnableBluetooth() {
+    throw "Deu error";
+  }
+
+  void enableBluetooth() {
     throw "Deu error";
   }
 
@@ -44,11 +48,15 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
     throw "Deu error";
   }
 
-  Future<List<Device>> listDevices() {
+  Future<List<Device>> listNewDevices() {
     throw "Deu error";
   }
 
-  void listPairedDevices() {
+  Future<List<Device>> listPairedDevices() {
+    throw "Deu error";
+  }
+
+  void callPairedDevices() {
     throw "Deu error";
   }
 

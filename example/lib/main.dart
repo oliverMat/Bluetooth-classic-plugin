@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> enableBluetooth() async {
     try {
       if (_checkPermission == true) {
-        await _bluetoothClassicPlugin.enableBluetooth();
+        _bluetoothClassicPlugin.enableBluetooth();
       }
     } on PlatformException {}
 
@@ -66,8 +66,8 @@ class _MyAppState extends State<MyApp> {
   Future<void> loadDevices() async {
     try {
       _bluetoothClassicPlugin.startDeviceDiscovery();
-      _bluetoothClassicPlugin.listPairedDevices();
-      _listDevices = _bluetoothClassicPlugin.listDevices();
+      _bluetoothClassicPlugin.callPairedDevices();
+      _listDevices = _bluetoothClassicPlugin.listPairedDevices();
     } on PlatformException {}
 
     if (!mounted) return;

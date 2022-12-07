@@ -15,7 +15,8 @@ import oliver.mat.bluetooth_classic.model.Device
 class BluetoothConnection {
 
     private var bluetoothAdapter: BluetoothAdapter? = null
-    private var devices: MutableList<String> = mutableListOf()
+    private var listNewDevices: MutableList<String> = mutableListOf()
+    private var listPairedDevices: MutableList<String> = mutableListOf()
 
     fun initBluetoothAdapter(activity: Activity) {
         if (bluetoothAdapter == null) {
@@ -23,18 +24,18 @@ class BluetoothConnection {
         }
     }
 
-    fun enableBluetooth(activity: Activity): Boolean {
-        var enable = false
+    fun isEnableBluetooth(): Boolean {
+        return bluetoothAdapter!!.isEnabled
+    }
 
+    fun enableBluetooth(activity: Activity) {
         if (bluetoothAdapter?.isEnabled == false) {
             startActivityForResult(activity, Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BLUETOOTH, null)
-            enable = true
         }
-
-        return enable
     }
 
     fun startDeviceDiscovery() {
+        clearList()
         bluetoothAdapter!!.startDiscovery()
     }
 
@@ -48,8 +49,6 @@ class BluetoothConnection {
             addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
         }
 
-        listPairedDevices()
-
         activity.registerReceiver(receiver, filter)
     }
 
@@ -57,13 +56,16 @@ class BluetoothConnection {
         activity.unregisterReceiver(receiver)
     }
 
-    fun listDevices(): List<String> {
-        return devices
+    fun listNewDevices(): List<String> {
+        return listNewDevices
     }
 
-    fun listPairedDevices() {
-        val pairedDevices: Set<BluetoothDevice>? = bluetoothAdapter?.bondedDevices
-        pairedDevices?.forEach { device ->
+    fun listPairedDevices(): List<String> {
+        return listPairedDevices
+    }
+
+    fun callPairedDevices() {
+        bluetoothAdapter?.bondedDevices?.forEach { device ->
             val deviceName = device.name
             val deviceHardwareAddress = device.address // MAC address
 
@@ -72,15 +74,14 @@ class BluetoothConnection {
                     deviceHardwareAddress = deviceHardwareAddress,
                     paired = true))
 
-            if (!devices.contains(deviceObject)) {
-                devices.add(deviceObject)
+            if (!listPairedDevices.contains(deviceObject)) {
+                listPairedDevices.add(deviceObject)
             }
         }
     }
 
     // Create a BroadcastReceiver for ACTION_FOUND.
     private val receiver = object : BroadcastReceiver() {
-
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action.toString()) {
                 BluetoothDevice.ACTION_FOUND -> {
@@ -93,15 +94,21 @@ class BluetoothConnection {
                             deviceHardwareAddress = deviceHardwareAddress,
                             paired = false))
 
-                    if (!devices.contains(deviceObject)) {
-                        devices.add(deviceObject)
+                    if (!listNewDevices.contains(deviceObject)) {
+                        listNewDevices.add(deviceObject)
                     }
                 }
             }
         }
     }
 
+    private fun clearList() {
+        listNewDevices.clear()
+        listPairedDevices.clear()
+
+    }
+
     companion object {
-        private const val REQUEST_ENABLE_BLUETOOTH = 2
+        private const val REQUEST_ENABLE_BLUETOOTH = 1
     }
 }

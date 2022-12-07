@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 
 import 'bluetooth_classic_platform_interface.dart';
 
-
 /// An implementation of [BluetoothClassicPlatform] that uses method channels.
 class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   /// The method channel used to interact with the native platform.
@@ -25,9 +24,14 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   }
 
   @override
-  Future<bool> enableBluetooth() async {
-    final version = await methodChannel.invokeMethod<bool>('enableBluetooth');
+  Future<bool> isEnableBluetooth() async {
+    final version = await methodChannel.invokeMethod<bool>('isEnableBluetooth');
     return version!;
+  }
+
+  @override
+  void enableBluetooth() async {
+    await methodChannel.invokeMethod<bool>('enableBluetooth');
   }
 
   @override
@@ -41,13 +45,24 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   }
 
   @override
-  Future<List<Device>> listDevices() async {
-    final device = await methodChannel.invokeMethod<List<dynamic>>('listDevices');
-    return jsonDecode(device.toString()).map<Device>((json) => Device.fromJson(json)).toList();
+  Future<List<Device>> listNewDevices() async {
+    final device = await methodChannel.invokeMethod<List<dynamic>>('listNewDevices');
+    return jsonDecode(device.toString())
+        .map<Device>((json) => Device.fromJson(json))
+        .toList();
   }
+
   @override
-  void listPairedDevices() async {
-    await methodChannel.invokeMethod('listPairedDevices');
+  Future<List<Device>> listPairedDevices() async {
+    final device = await methodChannel.invokeMethod<List<dynamic>>('listPairedDevices');
+    return jsonDecode(device.toString())
+        .map<Device>((json) => Device.fromJson(json))
+        .toList();
+  }
+
+  @override
+  void callPairedDevices() async {
+    await methodChannel.invokeMethod('callPairedDevices');
   }
 
   @override
