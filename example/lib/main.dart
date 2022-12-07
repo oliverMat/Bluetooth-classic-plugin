@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:bluetooth_classic/bluetooth_classic.dart';
 
-import 'TodoListView.dart';
+import 'DeviceListView.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _bluetoothClassicPlugin = BluetoothClassic();
 
-  final TodoListView _todoListView = TodoListView();
+  final DeviceListView _deviceListView = DeviceListView();
 
   Future<List<Device>> _listDevices = Future(() => []);
 
@@ -123,7 +123,7 @@ class _MyAppState extends State<MyApp> {
                     initialData: const [],
                     builder: (context, snapshot) {
                       return snapshot.hasData
-                          ? _todoListView.todoListViewBuilder(
+                          ? _deviceListView.deviceListViewBuilder(
                               context, snapshot, () {}, () {})
                           : _waiting();
                     }),

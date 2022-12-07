@@ -49,13 +49,7 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
 
         if (call.method == "listDevices") {
-            bluetoothConnection.listDevices().forEach {
-                result.success(hashMapOf(
-                        "NAME" to it.name,
-                        "ADDRESS" to it.deviceHardwareAddress,
-                        "PAIRED" to it.paired
-                ))
-            }
+            result.success(bluetoothConnection.listDevices())
         }
 
         if (call.method == "registerBroadcastReceiver") {

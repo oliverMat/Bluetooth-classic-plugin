@@ -43,14 +43,8 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
 
   @override
   Future<List<Device>> listDevices() async {
-    final version = await methodChannel.invokeMethod<Map<String, dynamic>>('listDevices');
-    var name = version!['NAME'] as String;
-    var address = version['ADDRESS'] as String;
-    var paired = version['PAIRED'] as bool;
-
-    List<Device> device = Device(name, address, paired) as List<Device>;
-
-    return device;
+    final device = await methodChannel.invokeMethod<List<dynamic>>('listDevices');
+    return jsonDecode(device.toString()).map<Device>((json) => Device.fromJson(json)).toList();
   }
 
   @override

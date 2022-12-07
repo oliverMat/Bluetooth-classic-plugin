@@ -8,14 +8,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.util.Log
 import androidx.core.app.ActivityCompat.startActivityForResult
+import com.google.gson.Gson
 import oliver.mat.bluetooth_classic.model.Device
 
 class BluetoothConnection {
 
     private var bluetoothAdapter: BluetoothAdapter? = null
-    private var devices: MutableList<Device> = mutableListOf()
+    private var devices: MutableList<String> = mutableListOf()
 
     fun initBluetoothAdapter(activity: Activity) {
         if (bluetoothAdapter == null) {
@@ -57,7 +57,7 @@ class BluetoothConnection {
         activity.unregisterReceiver(receiver)
     }
 
-    fun listDevices(): MutableList<Device> {
+    fun listDevices(): List<String> {
         return devices
     }
 
@@ -67,10 +67,10 @@ class BluetoothConnection {
             val deviceName = device.name
             val deviceHardwareAddress = device.address // MAC address
 
-            val deviceObject = Device(
+            val deviceObject = Gson().toJson(Device(
                     name = deviceName,
                     deviceHardwareAddress = deviceHardwareAddress,
-                    paired = true)
+                    paired = true))
 
             if (!devices.contains(deviceObject)) {
                 devices.add(deviceObject)
@@ -88,10 +88,10 @@ class BluetoothConnection {
                     val deviceName = device.name
                     val deviceHardwareAddress = device.address // MAC address
 
-                    val deviceObject = Device(
+                    val deviceObject = Gson().toJson(Device(
                             name = deviceName,
                             deviceHardwareAddress = deviceHardwareAddress,
-                            paired = false)
+                            paired = false))
 
                     if (!devices.contains(deviceObject)) {
                         devices.add(deviceObject)

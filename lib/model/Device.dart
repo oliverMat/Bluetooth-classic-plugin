@@ -1,14 +1,19 @@
 class Device {
+  final String name;
+  final String deviceHardwareAddress;
+  final bool paired;
 
-  Device(this.name, this.deviceHardwareAddress, this.paired);
+  const Device({
+    required this.name,
+    required this.deviceHardwareAddress,
+    required this.paired
+  });
 
-  String name = "";
-  String deviceHardwareAddress = "";
-  bool paired = false;
-
-  Device.fromJson(Map<List<String>, dynamic> json)
-      : name = json['name'] as String,
-        deviceHardwareAddress = json['deviceHardwareAddress'] as String,
-        paired = json["paired"] as bool;
-
+  factory Device.fromJson(Map<String, dynamic> json) {
+    return Device(
+      name: json['name'] as String,
+      deviceHardwareAddress: json['deviceHardwareAddress'] as String,
+      paired: json['paired'] as bool,
+    );
+  }
 }
