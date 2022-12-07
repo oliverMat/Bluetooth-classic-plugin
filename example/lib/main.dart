@@ -66,6 +66,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> loadDevices() async {
     try {
       _bluetoothClassicPlugin.startDeviceDiscovery();
+      _bluetoothClassicPlugin.listPairedDevices();
       _listDevices = _bluetoothClassicPlugin.listDevices();
     } on PlatformException {}
 

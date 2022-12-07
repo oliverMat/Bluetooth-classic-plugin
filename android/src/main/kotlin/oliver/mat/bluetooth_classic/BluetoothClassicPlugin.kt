@@ -52,6 +52,11 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(bluetoothConnection.listDevices())
         }
 
+        if (call.method == "listPairedDevices") {
+            bluetoothConnection.listPairedDevices()
+            result.success(true)
+        }
+
         if (call.method == "registerBroadcastReceiver") {
             bluetoothConnection.registerBroadcastReceiver(activity)
             result.success(true)

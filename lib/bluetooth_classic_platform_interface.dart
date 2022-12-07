@@ -48,6 +48,10 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
     throw "Deu error";
   }
 
+  void listPairedDevices() {
+    throw "Deu error";
+  }
+
   void registerBroadcastReceiver() {
     throw "Deu error";
   }

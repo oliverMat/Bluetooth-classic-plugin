@@ -2,6 +2,7 @@ import 'bluetooth_classic_platform_interface.dart';
 import 'package:bluetooth_classic/model/Device.dart';
 
 class BluetoothClassic {
+
   void initBluetoothAdapter() {
     return BluetoothClassicPlatform.instance.initBluetoothAdapter();
   }
@@ -24,6 +25,10 @@ class BluetoothClassic {
 
   Future<List<Device>> listDevices() {
     return BluetoothClassicPlatform.instance.listDevices();
+  }
+
+  void listPairedDevices() {
+    return BluetoothClassicPlatform.instance.listPairedDevices();
   }
 
   void registerBroadcastReceiver() {
