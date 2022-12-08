@@ -1,4 +1,4 @@
-package oliver.mat.bluetooth_classic
+package oliver.mat.bluetooth_classic.permissions
 
 import android.Manifest
 import android.app.Activity

@@ -10,23 +10,25 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import oliver.mat.bluetooth_classic.bluetooth_adapter.BluetoothAdapter
+import oliver.mat.bluetooth_classic.permissions.CheckSelfPermission
 
 /** BluetoothClassicPlugin */
-class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+class MethodChannelBluetoothAdapter : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var channel: MethodChannel
     private lateinit var activity: Activity
 
-    private val bluetoothConnection = BluetoothConnection()
+    private val bluetoothAdapter = BluetoothAdapter()
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "bluetooth_classic")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "bluetooth_adapter")
         channel.setMethodCallHandler(this)
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         if (call.method == "initBluetoothAdapter") {
-            bluetoothConnection.initBluetoothAdapter(activity)
+            bluetoothAdapter.initBluetoothAdapter(activity)
             result.success(true)
         }
 
@@ -35,48 +37,48 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
 
         if (call.method == "isEnableBluetooth") {
-            result.success(bluetoothConnection.isEnableBluetooth())
+            result.success(bluetoothAdapter.isEnableBluetooth())
         }
 
         if (call.method == "isDiscoveryDevice") {
-            result.success(bluetoothConnection.isDiscoveryDevice())
+            result.success(bluetoothAdapter.isDiscoveryDevice())
         }
 
         if (call.method == "enableBluetooth") {
-            bluetoothConnection.enableBluetooth(activity)
+            bluetoothAdapter.enableBluetooth(activity)
             result.success(true)
         }
 
         if (call.method == "startDeviceDiscovery") {
-            bluetoothConnection.startDeviceDiscovery()
+            bluetoothAdapter.startDeviceDiscovery()
             result.success(true)
         }
 
         if (call.method == "stopDeviceDiscovery") {
-            bluetoothConnection.stopDeviceDiscovery()
+            bluetoothAdapter.stopDeviceDiscovery()
             result.success(true)
         }
 
         if (call.method == "listNewDevices") {
-            result.success(bluetoothConnection.listNewDevices())
+            result.success(bluetoothAdapter.listNewDevices())
         }
 
         if (call.method == "listPairedDevices") {
-            result.success(bluetoothConnection.listPairedDevices())
+            result.success(bluetoothAdapter.listPairedDevices())
         }
 
         if (call.method == "callPairedDevices") {
-            bluetoothConnection.callPairedDevices()
+            bluetoothAdapter.callPairedDevices()
             result.success(true)
         }
 
         if (call.method == "registerBroadcastReceiver") {
-            bluetoothConnection.registerBroadcastReceiver(activity)
+            bluetoothAdapter.registerBroadcastReceiver(activity)
             result.success(true)
         }
 
         if (call.method == "unregisterBroadcastReceiver") {
-            bluetoothConnection.unregisterBroadcastReceiver(activity)
+            bluetoothAdapter.unregisterBroadcastReceiver(activity)
             result.success(true)
         }
     }
@@ -87,7 +89,7 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity
-        bluetoothConnection.initBluetoothAdapter(activity)
+        bluetoothAdapter.initBluetoothAdapter(activity)
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
@@ -99,7 +101,7 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onDetachedFromActivity() {
-        bluetoothConnection.unregisterBroadcastReceiver(activity)
+        bluetoothAdapter.unregisterBroadcastReceiver(activity)
     }
 
 }

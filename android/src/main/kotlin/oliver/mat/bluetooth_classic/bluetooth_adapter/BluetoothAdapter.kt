@@ -1,4 +1,4 @@
-package oliver.mat.bluetooth_classic
+package oliver.mat.bluetooth_classic.bluetooth_adapter
 
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
@@ -12,7 +12,7 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 import com.google.gson.Gson
 import oliver.mat.bluetooth_classic.model.Device
 
-class BluetoothConnection {
+class BluetoothAdapter {
 
     private var bluetoothAdapter: BluetoothAdapter? = null
     private var listNewDevices: MutableList<String> = mutableListOf()
