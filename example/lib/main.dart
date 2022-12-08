@@ -19,7 +19,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _bluetoothClassicPlugin = BluetoothClassic();
+  final _bluetoothClassicPlugin = BluetoothAdapter();
 
   final DeviceListView _deviceListView = DeviceListView();
 

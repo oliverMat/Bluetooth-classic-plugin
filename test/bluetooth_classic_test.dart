@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:bluetooth_classic/bluetooth_classic.dart';
-import 'package:bluetooth_classic/bluetooth_classic_platform_interface.dart';
-import 'package:bluetooth_classic/bluetooth_classic_method_channel.dart';
+import 'package:bluetooth_classic/bluetooth_adapter/bluetooth_adapter.dart';
+import 'package:bluetooth_classic/bluetooth_adapter/bluetooth_adapter_platform_interface.dart';
+import 'package:bluetooth_classic/bluetooth_adapter/bluetooth_adapter_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 /*
