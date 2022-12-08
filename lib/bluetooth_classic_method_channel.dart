@@ -10,7 +10,7 @@ import 'bluetooth_classic_platform_interface.dart';
 class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('bluetooth_adapter');
+  final methodChannel = const MethodChannel('bluetoothMethodChannel');
 
   @override
   void initBluetoothAdapter() async {

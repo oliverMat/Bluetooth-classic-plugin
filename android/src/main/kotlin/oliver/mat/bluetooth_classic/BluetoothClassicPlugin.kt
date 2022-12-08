@@ -14,7 +14,7 @@ import oliver.mat.bluetooth_classic.bluetooth_adapter.BluetoothAdapter
 import oliver.mat.bluetooth_classic.permissions.CheckSelfPermission
 
 /** BluetoothClassicPlugin */
-class MethodChannelBluetoothAdapter : FlutterPlugin, MethodCallHandler, ActivityAware {
+class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var channel: MethodChannel
     private lateinit var activity: Activity
@@ -22,7 +22,7 @@ class MethodChannelBluetoothAdapter : FlutterPlugin, MethodCallHandler, Activity
     private val bluetoothAdapter = BluetoothAdapter()
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, BLUETOOTH_ADAPTER)
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, BLUETOOTH_METHOD_CHANNEL)
         channel.setMethodCallHandler(this)
     }
 
@@ -106,7 +106,7 @@ class MethodChannelBluetoothAdapter : FlutterPlugin, MethodCallHandler, Activity
     }
 
     companion object {
-        private const val BLUETOOTH_ADAPTER = "bluetoothAdapter"
+        private const val BLUETOOTH_METHOD_CHANNEL = "bluetoothMethodChannel"
         private const val INIT_BLUETOOTH_ADAPTER = "initBluetoothAdapter"
         private const val CHECK_PERMISSION = "checkPermission"
         private const val IS_ENABLE_BLUETOOTH = "isEnableBluetooth"
