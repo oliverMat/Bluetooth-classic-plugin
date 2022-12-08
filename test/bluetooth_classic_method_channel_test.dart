@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:bluetooth_classic/bluetooth_adapter/bluetooth_adapter_method_channel.dart';
+import 'package:bluetooth_classic/bluetooth_classic_method_channel.dart';
 
 void main() {
   /*MethodChannelBluetoothClassic platform = MethodChannelBluetoothClassic();

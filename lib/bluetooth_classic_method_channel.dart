@@ -4,10 +4,10 @@ import 'package:bluetooth_classic/model/Device.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'bluetooth_adapter_platform_interface.dart';
+import 'bluetooth_classic_platform_interface.dart';
 
-/// An implementation of [BluetoothAdapterPlatform] that uses method channels.
-class MethodChannelBluetoothAdapter extends BluetoothAdapterPlatform {
+/// An implementation of [BluetoothClassicPlatform] that uses method channels.
+class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
   final methodChannel = const MethodChannel('bluetooth_adapter');

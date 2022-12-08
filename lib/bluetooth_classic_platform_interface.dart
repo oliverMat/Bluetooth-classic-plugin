@@ -1,26 +1,25 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'package:bluetooth_classic/model/Device.dart';
-import 'bluetooth_adapter_method_channel.dart';
+import 'bluetooth_classic_method_channel.dart';
 
-
-abstract class BluetoothAdapterPlatform extends PlatformInterface {
+abstract class BluetoothClassicPlatform extends PlatformInterface {
   /// Constructs a BluetoothClassicPlatform.
-  BluetoothAdapterPlatform() : super(token: _token);
+  BluetoothClassicPlatform() : super(token: _token);
 
   static final Object _token = Object();
 
-  static BluetoothAdapterPlatform _instance = MethodChannelBluetoothAdapter();
+  static BluetoothClassicPlatform _instance = MethodChannelBluetoothClassic();
 
-  /// The default instance of [BluetoothAdapterPlatform] to use.
+  /// The default instance of [BluetoothClassicPlatform] to use.
   ///
-  /// Defaults to [MethodChannelBluetoothAdapter].
-  static BluetoothAdapterPlatform get instance => _instance;
+  /// Defaults to [MethodChannelBluetoothClassic].
+  static BluetoothClassicPlatform get instance => _instance;
 
   /// Platform-specific implementations should set this with their own
-  /// platform-specific class that extends [BluetoothAdapterPlatform] when
+  /// platform-specific class that extends [BluetoothClassicPlatform] when
   /// they register themselves.
-  static set instance(BluetoothAdapterPlatform instance) {
+  static set instance(BluetoothClassicPlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }
