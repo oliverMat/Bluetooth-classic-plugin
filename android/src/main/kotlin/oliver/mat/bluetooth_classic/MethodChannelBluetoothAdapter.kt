@@ -106,7 +106,7 @@ class MethodChannelBluetoothAdapter : FlutterPlugin, MethodCallHandler, Activity
     }
 
     companion object {
-        private const val BLUETOOTH_ADAPTER = "bluetooth_adapter"
+        private const val BLUETOOTH_ADAPTER = "bluetoothAdapter"
         private const val INIT_BLUETOOTH_ADAPTER = "initBluetoothAdapter"
         private const val CHECK_PERMISSION = "checkPermission"
         private const val IS_ENABLE_BLUETOOTH = "isEnableBluetooth"
