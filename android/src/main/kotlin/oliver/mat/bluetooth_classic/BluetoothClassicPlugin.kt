@@ -38,6 +38,10 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(bluetoothConnection.isEnableBluetooth())
         }
 
+        if (call.method == "isDiscoveryDevice") {
+            result.success(bluetoothConnection.isDiscoveryDevice())
+        }
+
         if (call.method == "enableBluetooth") {
             bluetoothConnection.enableBluetooth(activity)
             result.success(true)

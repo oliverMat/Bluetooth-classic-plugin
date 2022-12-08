@@ -14,6 +14,10 @@ class BluetoothClassic {
     return BluetoothClassicPlatform.instance.isEnableBluetooth();
   }
 
+  Future<bool> isDiscoveryDevice() {
+    return BluetoothClassicPlatform.instance.isDiscoveryDevice();
+  }
+
   void enableBluetooth() {
     return BluetoothClassicPlatform.instance.enableBluetooth();
   }

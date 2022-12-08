@@ -36,6 +36,10 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
     throw "Deu error";
   }
 
+  Future<bool> isDiscoveryDevice() {
+    throw "Deu error";
+  }
+
   void enableBluetooth() {
     throw "Deu error";
   }

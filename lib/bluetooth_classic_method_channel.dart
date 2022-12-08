@@ -30,6 +30,12 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   }
 
   @override
+  Future<bool> isDiscoveryDevice() async {
+    final version = await methodChannel.invokeMethod<bool>('isDiscoveryDevice');
+    return version!;
+  }
+
+  @override
   void enableBluetooth() async {
     await methodChannel.invokeMethod<bool>('enableBluetooth');
   }

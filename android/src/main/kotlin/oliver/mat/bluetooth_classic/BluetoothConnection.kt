@@ -28,6 +28,10 @@ class BluetoothConnection {
         return bluetoothAdapter!!.isEnabled
     }
 
+    fun isDiscoveryDevice(): Boolean {
+        return bluetoothAdapter!!.isDiscovering
+    }
+
     fun enableBluetooth(activity: Activity) {
         if (bluetoothAdapter?.isEnabled == false) {
             startActivityForResult(activity, Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BLUETOOTH, null)
