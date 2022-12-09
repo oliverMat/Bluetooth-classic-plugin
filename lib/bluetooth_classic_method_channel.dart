@@ -80,4 +80,9 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   void unregisterBroadcastReceiver() async {
     await methodChannel.invokeMethod('unregisterBroadcastReceiver');
   }
+
+  @override
+  Future<void> initBluetoothSocket(String address, String uuid) async {
+    await methodChannel.invokeMethod('initBluetoothSocket', {'address': address, 'uuid': uuid});
+  }
 }

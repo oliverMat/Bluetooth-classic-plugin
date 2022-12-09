@@ -1,3 +1,4 @@
+
 import 'bluetooth_classic_platform_interface.dart';
 import 'package:bluetooth_classic/model/Device.dart';
 
@@ -48,5 +49,9 @@ class BluetoothClassic {
 
   void unregisterBroadcastReceiver() {
     return BluetoothClassicPlatform.instance.unregisterBroadcastReceiver();
+  }
+
+  Future<void> initBluetoothSocket(String address, String uuid) {
+    return BluetoothClassicPlatform.instance.initBluetoothSocket(address, uuid);
   }
 }

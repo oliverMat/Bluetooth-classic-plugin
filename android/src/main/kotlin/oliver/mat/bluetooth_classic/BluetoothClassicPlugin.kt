@@ -2,7 +2,6 @@ package oliver.mat.bluetooth_classic
 
 import android.app.Activity
 import androidx.annotation.NonNull
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -11,6 +10,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import oliver.mat.bluetooth_classic.bluetooth_adapter.BluetoothAdapter
+import oliver.mat.bluetooth_classic.bluetooth_socket.BluetoothSocket
 import oliver.mat.bluetooth_classic.permissions.CheckSelfPermission
 
 /** BluetoothClassicPlugin */
@@ -20,6 +20,7 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var activity: Activity
 
     private val bluetoothAdapter = BluetoothAdapter()
+    private val bluetoothSocket = BluetoothSocket()
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, BLUETOOTH_METHOD_CHANNEL)
@@ -28,6 +29,7 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
 
+        /** BluetoothAdapter */
         if (call.method == INIT_BLUETOOTH_ADAPTER) {
             bluetoothAdapter.initBluetoothAdapter(activity)
             result.success(true)
@@ -82,6 +84,36 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             bluetoothAdapter.unregisterBroadcastReceiver(activity)
             result.success(true)
         }
+
+        /** BluetoothSocket */
+        if (call.method == INIT_BLUETOOTH_SOCKET) {
+            bluetoothSocket.initBluetoothSocket(activity,
+                    call.argument<String>(ARGUMENT_ADDRESS).toString(),
+                    call.argument<String>(ARGUMENT_UUID).toString())
+            result.success(true)
+        }
+
+        if (call.method == IS_CONNECT_BLUETOOTH_SOCKET) {
+            result.success(bluetoothSocket.isConnectBluetoothSocket())
+        }
+
+        if (call.method == CONNECT_BLUETOOTH_SOCKET) {
+            bluetoothSocket.connectBluetoothSocket()
+            result.success(true)
+        }
+
+        if (call.method == CLOSE_BLUETOOTH_SOCKET) {
+            bluetoothSocket.closeBluetoothSocket()
+            result.success(true)
+        }
+
+        if (call.method == INPUT_STREAM_BLUETOOTH_SOCKET) {
+            result.success(bluetoothSocket.inputStreamBluetoothSocket())
+        }
+
+        if (call.method == OUTPUT_STREAM_BLUETOOTH_SOCKET) {
+            result.success(bluetoothSocket.outputStreamBluetoothSocket())
+        }
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
@@ -107,6 +139,8 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     companion object {
         private const val BLUETOOTH_METHOD_CHANNEL = "bluetoothMethodChannel"
+
+        /** BluetoothAdapter */
         private const val INIT_BLUETOOTH_ADAPTER = "initBluetoothAdapter"
         private const val CHECK_PERMISSION = "checkPermission"
         private const val IS_ENABLE_BLUETOOTH = "isEnableBluetooth"
@@ -119,6 +153,16 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         private const val CALL_PAIRED_DEVICES = "callPairedDevices"
         private const val REGISTER_BROADCAST_RECEIVER = "registerBroadcastReceiver"
         private const val UNREGISTER_BROADCAST_RECEIVER = "unregisterBroadcastReceiver"
+
+        /** BluetoothSocket */
+        private const val INIT_BLUETOOTH_SOCKET = "initBluetoothSocket"
+        private const val ARGUMENT_ADDRESS = "address"
+        private const val ARGUMENT_UUID = "uuid"
+        private const val IS_CONNECT_BLUETOOTH_SOCKET = "isConnectBluetoothSocket"
+        private const val CONNECT_BLUETOOTH_SOCKET = "connectBluetoothSocket"
+        private const val CLOSE_BLUETOOTH_SOCKET = "closeBluetoothSocket"
+        private const val INPUT_STREAM_BLUETOOTH_SOCKET = "inputStreamBluetoothSocket"
+        private const val OUTPUT_STREAM_BLUETOOTH_SOCKET = "outputStreamBluetoothSocket"
     }
 
 }

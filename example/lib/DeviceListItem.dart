@@ -2,7 +2,7 @@ import 'package:bluetooth_classic/model/Device.dart';
 import 'package:flutter/material.dart';
 
 class DeviceListItem {
-  Widget deviceListItem(Device device, onDelete, onEdit) {
+  Widget deviceListItem(Device device, getDevice) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Container(
@@ -28,10 +28,21 @@ class DeviceListItem {
                 ],
               ),
             ),
-            Icon(
-              device.paired ? Icons.link : Icons.link_off,
-              size: 30,
-            )
+            ElevatedButton(
+                onPressed: () {
+                  if (device.paired) {
+                    getDevice(device);
+                  } else {
+                    null;
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueGrey,
+                ),
+                child: Icon(
+                  device.paired ? Icons.link : Icons.link_off,
+                  size: 30,
+                ),),
           ],
         ),
       ),

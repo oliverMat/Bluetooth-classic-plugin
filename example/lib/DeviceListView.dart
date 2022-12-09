@@ -6,12 +6,12 @@ class DeviceListView {
 
   final DeviceListItem _todoListItem = DeviceListItem();
 
-  Widget deviceListViewBuilder(context, snapshot, onDelete, onEdit) {
+  Widget deviceListViewBuilder(context, snapshot, getDevice) {
     return ListView.builder(
       padding: const EdgeInsets.all(2.0),
       itemCount: snapshot.data.length,
       itemBuilder: (context, i) {
-        return _todoListItem.deviceListItem(snapshot.data[i], onDelete, onEdit);
+        return _todoListItem.deviceListItem(snapshot.data[i], getDevice);
       },
     );
   }

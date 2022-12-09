@@ -71,4 +71,8 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
   void unregisterBroadcastReceiver() {
     throw "Deu error";
   }
+
+  Future<void> initBluetoothSocket(String address, String uuid) {
+    throw "Deu error";
+  }
 }

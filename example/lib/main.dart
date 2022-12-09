@@ -125,7 +125,7 @@ class _MyAppState extends State<MyApp> {
                     builder: (context, snapshot) {
                       return snapshot.hasData
                           ? _deviceListView.deviceListViewBuilder(
-                              context, snapshot, () {}, () {})
+                              context, snapshot, getDevice)
                           : _waiting();
                     }),
               ),
@@ -140,5 +140,9 @@ class _MyAppState extends State<MyApp> {
     return const Center(
       child: Text("No data..."),
     );
+  }
+
+  void getDevice(Device device) {
+    _bluetoothClassicPlugin.initBluetoothSocket(device.deviceHardwareAddress, "00001101-0000-1000-8000-00805F9B34FB");
   }
 }
