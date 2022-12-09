@@ -10,23 +10,19 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.util.*
 
-class BluetoothSocket {
+class BluetoothSocket: BluetoothSocketInterface  {
 
     private var bluetoothSocket: BluetoothSocket? = null
 
-    private fun initBluetoothAdapter(activity: Activity): BluetoothAdapter {
-        return (activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
-    }
-
-    fun initBluetoothSocket(activity: Activity, address: String, uuid: String) {
+    override fun initBluetoothSocket(activity: Activity, address: String, uuid: String) {
         bluetoothSocket = initBluetoothAdapter(activity).getRemoteDevice(address).createRfcommSocketToServiceRecord(UUID.fromString(uuid))
     }
 
-    fun isConnectBluetoothSocket(): Boolean {
+    override fun isConnectBluetoothSocket(): Boolean {
         return bluetoothSocket!!.isConnected
     }
 
-    fun connectBluetoothSocket() {
+    override fun connectBluetoothSocket() {
         try {
             if (bluetoothSocket != null) {
                 bluetoothSocket!!.connect()
@@ -36,7 +32,7 @@ class BluetoothSocket {
         }
     }
 
-    fun closeBluetoothSocket() {
+    override fun closeBluetoothSocket() {
         try {
             if (bluetoothSocket != null) {
                 bluetoothSocket!!.close()
@@ -46,12 +42,16 @@ class BluetoothSocket {
         }
     }
 
-    fun inputStreamBluetoothSocket(): InputStream {
+    override fun inputStreamBluetoothSocket(): InputStream {
         return bluetoothSocket!!.inputStream
     }
 
-    fun outputStreamBluetoothSocket(): OutputStream {
+    override fun outputStreamBluetoothSocket(): OutputStream {
         return bluetoothSocket!!.outputStream
+    }
+
+    private fun initBluetoothAdapter(activity: Activity): BluetoothAdapter {
+        return (activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
     }
 
 }

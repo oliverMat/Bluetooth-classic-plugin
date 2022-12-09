@@ -12,42 +12,42 @@ import androidx.core.app.ActivityCompat.startActivityForResult
 import com.google.gson.Gson
 import oliver.mat.bluetooth_classic.model.Device
 
-class BluetoothAdapter {
+class BluetoothAdapter: BluetoothAdapterInterface {
 
     private var bluetoothAdapter: BluetoothAdapter? = null
     private var listNewDevices: MutableList<String> = mutableListOf()
     private var listPairedDevices: MutableList<String> = mutableListOf()
 
-    fun initBluetoothAdapter(activity: Activity) {
+    override fun initBluetoothAdapter(activity: Activity) {
         if (bluetoothAdapter == null) {
             bluetoothAdapter = (activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
         }
     }
 
-    fun isEnableBluetooth(): Boolean {
+    override fun isEnableBluetooth(): Boolean {
         return bluetoothAdapter!!.isEnabled
     }
 
-    fun isDiscoveryDevice(): Boolean {
+    override fun isDiscoveryDevice(): Boolean {
         return bluetoothAdapter!!.isDiscovering
     }
 
-    fun enableBluetooth(activity: Activity) {
+    override fun enableBluetooth(activity: Activity) {
         if (bluetoothAdapter?.isEnabled == false) {
             startActivityForResult(activity, Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BLUETOOTH, null)
         }
     }
 
-    fun startDeviceDiscovery() {
+    override fun startDeviceDiscovery() {
         clearList()
         bluetoothAdapter!!.startDiscovery()
     }
 
-    fun stopDeviceDiscovery() {
+    override fun stopDeviceDiscovery() {
         bluetoothAdapter!!.cancelDiscovery()
     }
 
-    fun registerBroadcastReceiver(activity: Activity) {
+    override fun registerBroadcastReceiver(activity: Activity) {
         val filter = IntentFilter().apply {
             addAction(BluetoothDevice.ACTION_FOUND)
             addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
@@ -56,19 +56,19 @@ class BluetoothAdapter {
         activity.registerReceiver(receiver, filter)
     }
 
-    fun unregisterBroadcastReceiver(activity: Activity) {
+    override fun unregisterBroadcastReceiver(activity: Activity) {
         activity.unregisterReceiver(receiver)
     }
 
-    fun listNewDevices(): List<String> {
+    override fun listNewDevices(): List<String> {
         return listNewDevices
     }
 
-    fun listPairedDevices(): List<String> {
+    override fun listPairedDevices(): List<String> {
         return listPairedDevices
     }
 
-    fun callPairedDevices() {
+    override fun callPairedDevices() {
         bluetoothAdapter?.bondedDevices?.forEach { device ->
             val deviceName = device.name
             val deviceHardwareAddress = device.address // MAC address
