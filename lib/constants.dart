@@ -25,5 +25,6 @@ class Constants {
   static const closeBluetoothSocket = 'closeBluetoothSocket';
   static const inputStreamBluetoothSocket = 'inputStreamBluetoothSocket';
   static const outputStreamBluetoothSocket = 'outputStreamBluetoothSocket';
+  static const argumentOutputStream = 'byteOutputStream';
 
 }

@@ -42,12 +42,12 @@ class BluetoothSocket: BluetoothSocketInterface  {
         }
     }
 
-    override fun inputStreamBluetoothSocket(): InputStream {
-        return bluetoothSocket!!.inputStream
+    override fun inputStreamBluetoothSocket(): Int {
+        return bluetoothSocket!!.inputStream.read()
     }
 
-    override fun outputStreamBluetoothSocket(): OutputStream {
-        return bluetoothSocket!!.outputStream
+    override fun outputStreamBluetoothSocket(bytes: ByteArray) {
+        bluetoothSocket!!.outputStream.write(bytes)
     }
 
     private fun initBluetoothAdapter(activity: Activity): BluetoothAdapter {

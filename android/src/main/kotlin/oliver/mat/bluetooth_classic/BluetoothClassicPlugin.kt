@@ -112,7 +112,9 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
 
         if (call.method == OUTPUT_STREAM_BLUETOOTH_SOCKET) {
-            result.success(bluetoothSocket.outputStreamBluetoothSocket())
+            val byte: ByteArray = call.argument<ByteArray>(ARGUMENT_OUTPUT_STREAM)!!
+            bluetoothSocket.outputStreamBluetoothSocket(byte)
+            result.success(true)
         }
     }
 
@@ -163,6 +165,7 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         private const val CLOSE_BLUETOOTH_SOCKET = "closeBluetoothSocket"
         private const val INPUT_STREAM_BLUETOOTH_SOCKET = "inputStreamBluetoothSocket"
         private const val OUTPUT_STREAM_BLUETOOTH_SOCKET = "outputStreamBluetoothSocket"
+        private const val ARGUMENT_OUTPUT_STREAM = "byteOutputStream"
     }
 
 }

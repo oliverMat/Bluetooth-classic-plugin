@@ -14,7 +14,7 @@ interface BluetoothSocketInterface {
 
     fun closeBluetoothSocket()
 
-    fun inputStreamBluetoothSocket(): InputStream
+    fun inputStreamBluetoothSocket(): Int
 
-    fun outputStreamBluetoothSocket(): OutputStream
+    fun outputStreamBluetoothSocket(bytes: ByteArray)
 }

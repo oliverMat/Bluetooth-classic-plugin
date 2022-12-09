@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:bluetooth_classic/constants.dart';
 import 'package:bluetooth_classic/model/Device.dart';
@@ -103,12 +104,12 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   }
 
   @override
-  Future<dynamic> inputStreamBluetoothSocket() async {
+  Future<Int> inputStreamBluetoothSocket() async {
     return await methodChannel.invokeMethod(Constants.inputStreamBluetoothSocket);
   }
 
   @override
-  Future<dynamic> outputStreamBluetoothSocket() async {
-    return await methodChannel.invokeMethod(Constants.outputStreamBluetoothSocket);
+  Future<void> outputStreamBluetoothSocket(Uint8List byte) async {
+    await methodChannel.invokeMethod(Constants.outputStreamBluetoothSocket, {Constants.argumentOutputStream: byte});
   }
 }

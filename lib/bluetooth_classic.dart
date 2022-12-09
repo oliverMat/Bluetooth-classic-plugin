@@ -1,4 +1,7 @@
 
+import 'dart:ffi';
+import 'dart:typed_data';
+
 import 'bluetooth_classic_platform_interface.dart';
 import 'package:bluetooth_classic/model/Device.dart';
 
@@ -70,11 +73,11 @@ class BluetoothClassic {
     return BluetoothClassicPlatform.instance.closeBluetoothSocket();
   }
 
-  Future<dynamic> inputStreamBluetoothSocket() {
+  Future<Int> inputStreamBluetoothSocket() {
     return BluetoothClassicPlatform.instance.inputStreamBluetoothSocket();
   }
 
-  Future<dynamic> outputStreamBluetoothSocket() {
-    return BluetoothClassicPlatform.instance.outputStreamBluetoothSocket();
+  Future<void> outputStreamBluetoothSocket(Uint8List byte) {
+    return BluetoothClassicPlatform.instance.outputStreamBluetoothSocket(byte);
   }
 }

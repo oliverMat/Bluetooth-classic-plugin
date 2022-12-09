@@ -26,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   Future<List<Device>> _listDevices = Future(() => []);
 
   bool _checkPermission = false;
+  bool _isEnableBluetooth = false;
 
   @override
   void initState() {
@@ -37,8 +38,10 @@ class _MyAppState extends State<MyApp> {
     try {
       _bluetoothClassicPlugin.registerBroadcastReceiver();
       _checkPermission = await _bluetoothClassicPlugin.checkPermission();
+      _isEnableBluetooth = await _bluetoothClassicPlugin.isEnableBluetooth();
     } on PlatformException {
       _checkPermission = false;
+      _isEnableBluetooth = false;
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -93,7 +96,7 @@ class _MyAppState extends State<MyApp> {
               Row(
                 children: [
                   ElevatedButton(
-                      onPressed: _checkPermission ? null : enableBluetooth,
+                      onPressed: _isEnableBluetooth ? null : enableBluetooth,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                         padding: const EdgeInsets.all(16),
@@ -145,5 +148,13 @@ class _MyAppState extends State<MyApp> {
   void getDevice(Device device) {
     _bluetoothClassicPlugin.initBluetoothSocket(device.deviceHardwareAddress, "00001101-0000-1000-8000-00805F9B34FB");
     _bluetoothClassicPlugin.connectBluetoothSocket();
+    outputStream();
+  }
+
+  void outputStream() {
+    List<int> list = 'vinst\r'.codeUnits;
+    Uint8List bytes = Uint8List.fromList(list);
+    _bluetoothClassicPlugin.outputStreamBluetoothSocket(bytes);
+    print(_bluetoothClassicPlugin.inputStreamBluetoothSocket());
   }
 }

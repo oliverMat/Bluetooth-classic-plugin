@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:typed_data';
+
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'package:bluetooth_classic/model/Device.dart';
@@ -90,11 +93,11 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
     throw UnimplementedError('closeBluetoothSocket() has not been implemented.');
   }
 
-  Future<dynamic> inputStreamBluetoothSocket() {
+  Future<Int> inputStreamBluetoothSocket() {
     throw UnimplementedError('inputStreamBluetoothSocket() has not been implemented.');
   }
 
-  Future<dynamic> outputStreamBluetoothSocket() {
+  Future<void> outputStreamBluetoothSocket(Uint8List byte) {
     throw UnimplementedError('outputStreamBluetoothSocket() has not been implemented.');
   }
 }
