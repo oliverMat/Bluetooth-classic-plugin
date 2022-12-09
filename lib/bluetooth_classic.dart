@@ -3,6 +3,8 @@ import 'bluetooth_classic_platform_interface.dart';
 import 'package:bluetooth_classic/model/Device.dart';
 
 class BluetoothClassic {
+
+  /// BluetoothAdapter */
   void initBluetoothAdapter() {
     return BluetoothClassicPlatform.instance.initBluetoothAdapter();
   }
@@ -51,7 +53,28 @@ class BluetoothClassic {
     return BluetoothClassicPlatform.instance.unregisterBroadcastReceiver();
   }
 
+  /// BluetoothSocket */
   Future<void> initBluetoothSocket(String address, String uuid) {
     return BluetoothClassicPlatform.instance.initBluetoothSocket(address, uuid);
+  }
+
+  Future<bool> isConnectBluetoothSocket() {
+    return BluetoothClassicPlatform.instance.isConnectBluetoothSocket();
+  }
+
+  void connectBluetoothSocket() {
+    return BluetoothClassicPlatform.instance.connectBluetoothSocket();
+  }
+
+  void closeBluetoothSocket() {
+    return BluetoothClassicPlatform.instance.closeBluetoothSocket();
+  }
+
+  Future<dynamic> inputStreamBluetoothSocket() {
+    return BluetoothClassicPlatform.instance.inputStreamBluetoothSocket();
+  }
+
+  Future<dynamic> outputStreamBluetoothSocket() {
+    return BluetoothClassicPlatform.instance.outputStreamBluetoothSocket();
   }
 }

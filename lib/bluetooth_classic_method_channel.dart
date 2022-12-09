@@ -12,6 +12,8 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('bluetoothMethodChannel');
 
+
+  /// BluetoothAdapter */
   @override
   void initBluetoothAdapter() async {
     await methodChannel.invokeMethod('initBluetoothAdapter');
@@ -81,8 +83,34 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
     await methodChannel.invokeMethod('unregisterBroadcastReceiver');
   }
 
+  /// BluetoothSocket */
   @override
   Future<void> initBluetoothSocket(String address, String uuid) async {
     await methodChannel.invokeMethod('initBluetoothSocket', {'address': address, 'uuid': uuid});
+  }
+
+  @override
+  Future<bool> isConnectBluetoothSocket() async {
+    return await methodChannel.invokeMethod('isConnectBluetoothSocket');
+  }
+
+  @override
+  void connectBluetoothSocket() async {
+    await methodChannel.invokeMethod('connectBluetoothSocket');
+  }
+
+  @override
+  void closeBluetoothSocket() async {
+    await methodChannel.invokeMethod('closeBluetoothSocket');
+  }
+
+  @override
+  Future<dynamic> inputStreamBluetoothSocket() async {
+    return await methodChannel.invokeMethod('inputStreamBluetoothSocket');
+  }
+
+  @override
+  Future<dynamic> outputStreamBluetoothSocket() async {
+    return await methodChannel.invokeMethod('outputStreamBluetoothSocket');
   }
 }

@@ -24,6 +24,7 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  /// BluetoothAdapter */
   void initBluetoothAdapter() {
     throw "Deu error";
   }
@@ -72,7 +73,28 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
     throw "Deu error";
   }
 
+  /// BluetoothSocket */
   Future<void> initBluetoothSocket(String address, String uuid) {
+    throw "Deu error";
+  }
+
+  Future<bool> isConnectBluetoothSocket() {
+    throw "Deu error";
+  }
+
+  void connectBluetoothSocket() {
+    throw "Deu error";
+  }
+
+  void closeBluetoothSocket() {
+    throw "Deu error";
+  }
+
+  Future<dynamic> inputStreamBluetoothSocket() {
+    throw "Deu error";
+  }
+
+  Future<dynamic> outputStreamBluetoothSocket() {
     throw "Deu error";
   }
 }
