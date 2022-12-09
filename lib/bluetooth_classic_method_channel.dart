@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bluetooth_classic/constants.dart';
 import 'package:bluetooth_classic/model/Device.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -8,53 +9,50 @@ import 'bluetooth_classic_platform_interface.dart';
 
 /// An implementation of [BluetoothClassicPlatform] that uses method channels.
 class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
-  /// The method channel used to interact with the native platform.
+
   @visibleForTesting
-  final methodChannel = const MethodChannel('bluetoothMethodChannel');
+  final methodChannel = const MethodChannel(Constants.bluetoothMethodChannel);
 
 
   /// BluetoothAdapter */
   @override
   void initBluetoothAdapter() async {
-    await methodChannel.invokeMethod('initBluetoothAdapter');
+    await methodChannel.invokeMethod(Constants.initBluetoothAdapter);
   }
 
   @override
   Future<bool> checkPermission() async {
-    final version = await methodChannel.invokeMethod<bool>('checkPermission');
-    return version!;
+    return await methodChannel.invokeMethod(Constants.checkPermission);
   }
 
   @override
   Future<bool> isEnableBluetooth() async {
-    final version = await methodChannel.invokeMethod<bool>('isEnableBluetooth');
-    return version!;
+    return await methodChannel.invokeMethod(Constants.isEnableBluetooth);
   }
 
   @override
   Future<bool> isDiscoveryDevice() async {
-    final version = await methodChannel.invokeMethod<bool>('isDiscoveryDevice');
-    return version!;
+    return await methodChannel.invokeMethod(Constants.isDiscoveryDevice);
   }
 
   @override
   void enableBluetooth() async {
-    await methodChannel.invokeMethod<bool>('enableBluetooth');
+    await methodChannel.invokeMethod(Constants.enableBluetooth);
   }
 
   @override
   void startDeviceDiscovery() async {
-    await methodChannel.invokeMethod('startDeviceDiscovery');
+    await methodChannel.invokeMethod(Constants.startDeviceDiscovery);
   }
 
   @override
   void stopDeviceDiscovery() async {
-    await methodChannel.invokeMethod('stopDeviceDiscovery');
+    await methodChannel.invokeMethod(Constants.stopDeviceDiscovery);
   }
 
   @override
   Future<List<Device>> listNewDevices() async {
-    final device = await methodChannel.invokeMethod<List<dynamic>>('listNewDevices');
+    final device = await methodChannel.invokeMethod<List<dynamic>>(Constants.listNewDevices);
     return jsonDecode(device.toString())
         .map<Device>((json) => Device.fromJson(json))
         .toList();
@@ -62,7 +60,7 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
 
   @override
   Future<List<Device>> listPairedDevices() async {
-    final device = await methodChannel.invokeMethod<List<dynamic>>('listPairedDevices');
+    final device = await methodChannel.invokeMethod<List<dynamic>>(Constants.listPairedDevices);
     return jsonDecode(device.toString())
         .map<Device>((json) => Device.fromJson(json))
         .toList();
@@ -70,47 +68,47 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
 
   @override
   void callPairedDevices() async {
-    await methodChannel.invokeMethod('callPairedDevices');
+    await methodChannel.invokeMethod(Constants.callPairedDevices);
   }
 
   @override
   void registerBroadcastReceiver() async {
-    await methodChannel.invokeMethod('registerBroadcastReceiver');
+    await methodChannel.invokeMethod(Constants.registerBroadcastReceiver);
   }
 
   @override
   void unregisterBroadcastReceiver() async {
-    await methodChannel.invokeMethod('unregisterBroadcastReceiver');
+    await methodChannel.invokeMethod(Constants.unregisterBroadcastReceiver);
   }
 
   /// BluetoothSocket */
   @override
   Future<void> initBluetoothSocket(String address, String uuid) async {
-    await methodChannel.invokeMethod('initBluetoothSocket', {'address': address, 'uuid': uuid});
+    await methodChannel.invokeMethod(Constants.initBluetoothSocket, {Constants.argumentAddress: address, Constants.argumentUuid: uuid});
   }
 
   @override
   Future<bool> isConnectBluetoothSocket() async {
-    return await methodChannel.invokeMethod('isConnectBluetoothSocket');
+    return await methodChannel.invokeMethod(Constants.isConnectBluetoothSocket);
   }
 
   @override
   void connectBluetoothSocket() async {
-    await methodChannel.invokeMethod('connectBluetoothSocket');
+    await methodChannel.invokeMethod(Constants.connectBluetoothSocket);
   }
 
   @override
   void closeBluetoothSocket() async {
-    await methodChannel.invokeMethod('closeBluetoothSocket');
+    await methodChannel.invokeMethod(Constants.closeBluetoothSocket);
   }
 
   @override
   Future<dynamic> inputStreamBluetoothSocket() async {
-    return await methodChannel.invokeMethod('inputStreamBluetoothSocket');
+    return await methodChannel.invokeMethod(Constants.inputStreamBluetoothSocket);
   }
 
   @override
   Future<dynamic> outputStreamBluetoothSocket() async {
-    return await methodChannel.invokeMethod('outputStreamBluetoothSocket');
+    return await methodChannel.invokeMethod(Constants.outputStreamBluetoothSocket);
   }
 }

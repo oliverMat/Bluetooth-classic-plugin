@@ -26,75 +26,75 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
 
   /// BluetoothAdapter */
   void initBluetoothAdapter() {
-    throw "Deu error";
+    throw UnimplementedError('initBluetoothAdapter() has not been implemented.');
   }
 
   Future<bool> checkPermission() {
-    throw "Deu error";
+    throw UnimplementedError('checkPermission() has not been implemented.');
   }
 
   Future<bool> isEnableBluetooth() {
-    throw "Deu error";
+    throw UnimplementedError('isEnableBluetooth() has not been implemented.');
   }
 
   Future<bool> isDiscoveryDevice() {
-    throw "Deu error";
+    throw UnimplementedError('isDiscoveryDevice() has not been implemented.');
   }
 
   void enableBluetooth() {
-    throw "Deu error";
+    throw UnimplementedError('enableBluetooth() has not been implemented.');
   }
 
   void startDeviceDiscovery() {
-    throw "Deu error";
+    throw UnimplementedError('startDeviceDiscovery() has not been implemented.');
   }
 
   void stopDeviceDiscovery() {
-    throw "Deu error";
+    throw UnimplementedError('stopDeviceDiscovery() has not been implemented.');
   }
 
   Future<List<Device>> listNewDevices() {
-    throw "Deu error";
+    throw UnimplementedError('listNewDevices() has not been implemented.');
   }
 
   Future<List<Device>> listPairedDevices() {
-    throw "Deu error";
+    throw UnimplementedError('listPairedDevices() has not been implemented.');
   }
 
   void callPairedDevices() {
-    throw "Deu error";
+    throw UnimplementedError('callPairedDevices() has not been implemented.');
   }
 
   void registerBroadcastReceiver() {
-    throw "Deu error";
+    throw UnimplementedError('registerBroadcastReceiver() has not been implemented.');
   }
 
   void unregisterBroadcastReceiver() {
-    throw "Deu error";
+    throw UnimplementedError('unregisterBroadcastReceiver() has not been implemented.');
   }
 
   /// BluetoothSocket */
   Future<void> initBluetoothSocket(String address, String uuid) {
-    throw "Deu error";
+    throw UnimplementedError('initBluetoothSocket() has not been implemented.');
   }
 
   Future<bool> isConnectBluetoothSocket() {
-    throw "Deu error";
+    throw UnimplementedError('isConnectBluetoothSocket() has not been implemented.');
   }
 
   void connectBluetoothSocket() {
-    throw "Deu error";
+    throw UnimplementedError('connectBluetoothSocket() has not been implemented.');
   }
 
   void closeBluetoothSocket() {
-    throw "Deu error";
+    throw UnimplementedError('closeBluetoothSocket() has not been implemented.');
   }
 
   Future<dynamic> inputStreamBluetoothSocket() {
-    throw "Deu error";
+    throw UnimplementedError('inputStreamBluetoothSocket() has not been implemented.');
   }
 
   Future<dynamic> outputStreamBluetoothSocket() {
-    throw "Deu error";
+    throw UnimplementedError('outputStreamBluetoothSocket() has not been implemented.');
   }
 }
