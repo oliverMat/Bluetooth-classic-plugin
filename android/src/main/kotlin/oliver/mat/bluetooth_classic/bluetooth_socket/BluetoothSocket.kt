@@ -20,7 +20,7 @@ class BluetoothSocket: BluetoothSocketInterface {
         return bluetoothSocket!!.isConnected
     }
 
-    override fun connectBluetoothSocket() {
+    override suspend fun connectBluetoothSocket() {
         try {
             if (bluetoothSocket != null) {
                 bluetoothSocket!!.connect()
@@ -30,7 +30,7 @@ class BluetoothSocket: BluetoothSocketInterface {
         }
     }
 
-    override fun closeBluetoothSocket() {
+    override suspend fun closeBluetoothSocket() {
         try {
             if (bluetoothSocket != null) {
                 bluetoothSocket!!.close()
@@ -40,8 +40,8 @@ class BluetoothSocket: BluetoothSocketInterface {
         }
     }
 
-    override fun inputStreamBluetoothSocket(): ByteArray {
-        val bytes = ByteArray(100)
+    override suspend fun inputStreamBluetoothSocket(): ByteArray {
+        val bytes = ByteArray(1024)
         try {
             bluetoothSocket!!.inputStream.read(bytes)
         } catch (e: IOException) {
@@ -50,7 +50,7 @@ class BluetoothSocket: BluetoothSocketInterface {
         return bytes
     }
 
-    override fun outputStreamBluetoothSocket(bytes: ByteArray) {
+    override suspend fun outputStreamBluetoothSocket(bytes: ByteArray) {
         try {
             bluetoothSocket!!.outputStream.write(bytes)
         } catch (e: IOException) {

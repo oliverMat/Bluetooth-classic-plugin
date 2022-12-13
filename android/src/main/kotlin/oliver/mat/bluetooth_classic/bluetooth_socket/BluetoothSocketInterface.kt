@@ -10,11 +10,11 @@ interface BluetoothSocketInterface {
 
     fun isConnectBluetoothSocket(): Boolean
 
-    fun connectBluetoothSocket()
+    suspend fun connectBluetoothSocket()
 
-    fun closeBluetoothSocket()
+    suspend fun closeBluetoothSocket()
 
-    fun inputStreamBluetoothSocket(): ByteArray
+    suspend fun inputStreamBluetoothSocket(): ByteArray
 
-    fun outputStreamBluetoothSocket(bytes: ByteArray)
+    suspend fun outputStreamBluetoothSocket(bytes: ByteArray)
 }

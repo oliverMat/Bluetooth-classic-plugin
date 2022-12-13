@@ -177,8 +177,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> outputStream() async {
-    List<int> dataInt = [0x80, 0x00, 0x00, 0x80];
-    _bluetoothClassicPlugin.outputStreamBluetoothSocket(Uint8List.fromList(dataInt));
+    _bluetoothClassicPlugin.outputStreamBluetoothSocket(Uint8List.fromList([0x80, 0x00, 0x00, 0x80]));
     receiver();
   }
 

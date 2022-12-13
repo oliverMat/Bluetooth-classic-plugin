@@ -9,6 +9,9 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import oliver.mat.bluetooth_classic.bluetooth_adapter.BluetoothAdapter
 import oliver.mat.bluetooth_classic.bluetooth_socket.BluetoothSocket
 import oliver.mat.bluetooth_classic.permissions.CheckSelfPermission
@@ -21,6 +24,8 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private val bluetoothAdapter = BluetoothAdapter()
     private val bluetoothSocket = BluetoothSocket()
+
+    private val coroutine: GlobalScope = GlobalScope
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, BLUETOOTH_METHOD_CHANNEL)
@@ -98,23 +103,29 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
 
         if (call.method == CONNECT_BLUETOOTH_SOCKET) {
-            bluetoothSocket.connectBluetoothSocket()
-            result.success(true)
+            coroutine.launch {
+                bluetoothSocket.connectBluetoothSocket()
+                result.success(true)
+            }
         }
 
         if (call.method == CLOSE_BLUETOOTH_SOCKET) {
-            bluetoothSocket.closeBluetoothSocket()
-            result.success(true)
+            coroutine.launch {
+                bluetoothSocket.closeBluetoothSocket()
+                result.success(true)
+            }
         }
 
         if (call.method == INPUT_STREAM_BLUETOOTH_SOCKET) {
-            result.success(bluetoothSocket.inputStreamBluetoothSocket())
+            coroutine.launch { result.success(bluetoothSocket.inputStreamBluetoothSocket()) }
         }
 
         if (call.method == OUTPUT_STREAM_BLUETOOTH_SOCKET) {
-            val byte: ByteArray = call.argument<ByteArray>(ARGUMENT_OUTPUT_STREAM)!!
-            bluetoothSocket.outputStreamBluetoothSocket(byte)
-            result.success(true)
+            coroutine.launch {
+                val byte: ByteArray = call.argument<ByteArray>(ARGUMENT_OUTPUT_STREAM)!!
+                bluetoothSocket.outputStreamBluetoothSocket(byte)
+                result.success(true)
+            }
         }
     }
 
@@ -137,6 +148,7 @@ class BluetoothClassicPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onDetachedFromActivity() {
         bluetoothAdapter.unregisterBroadcastReceiver(activity)
+        coroutine.cancel()
     }
 
     companion object {
