@@ -104,7 +104,7 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   }
 
   @override
-  Future<Int> inputStreamBluetoothSocket() async {
+  Future<Uint8List> inputStreamBluetoothSocket() async {
     return await methodChannel.invokeMethod(Constants.inputStreamBluetoothSocket);
   }
 

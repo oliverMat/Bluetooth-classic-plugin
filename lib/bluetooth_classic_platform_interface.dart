@@ -93,7 +93,7 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
     throw UnimplementedError('closeBluetoothSocket() has not been implemented.');
   }
 
-  Future<Int> inputStreamBluetoothSocket() {
+  Future<Uint8List> inputStreamBluetoothSocket() {
     throw UnimplementedError('inputStreamBluetoothSocket() has not been implemented.');
   }
 

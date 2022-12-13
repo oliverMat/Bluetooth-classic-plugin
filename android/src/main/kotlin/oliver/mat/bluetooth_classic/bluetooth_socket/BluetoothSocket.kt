@@ -6,11 +6,9 @@ import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
 import android.content.Context
 import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
 import java.util.*
 
-class BluetoothSocket: BluetoothSocketInterface  {
+class BluetoothSocket: BluetoothSocketInterface {
 
     private var bluetoothSocket: BluetoothSocket? = null
 
@@ -42,16 +40,25 @@ class BluetoothSocket: BluetoothSocketInterface  {
         }
     }
 
-    override fun inputStreamBluetoothSocket(): Int {
-        return bluetoothSocket!!.inputStream.read()
+    override fun inputStreamBluetoothSocket(): ByteArray {
+        val bytes = ByteArray(100)
+        try {
+            bluetoothSocket!!.inputStream.read(bytes)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return bytes
     }
 
     override fun outputStreamBluetoothSocket(bytes: ByteArray) {
-        bluetoothSocket!!.outputStream.write(bytes)
+        try {
+            bluetoothSocket!!.outputStream.write(bytes)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 
     private fun initBluetoothAdapter(activity: Activity): BluetoothAdapter {
         return (activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
     }
-
 }

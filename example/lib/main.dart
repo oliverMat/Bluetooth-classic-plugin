@@ -118,6 +118,32 @@ class _MyAppState extends State<MyApp> {
                         Icons.change_circle_rounded,
                         size: 30,
                       )),
+                  const SizedBox(width: 8),
+                  ElevatedButton(
+                      onPressed: () {
+                        _bluetoothClassicPlugin.closeBluetoothSocket();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        padding: const EdgeInsets.all(16),
+                      ),
+                      child: const Icon(
+                        Icons.close,
+                        size: 30,
+                      )),
+                  const SizedBox(width: 8),
+                  ElevatedButton(
+                      onPressed: () {
+                        outputStream();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        padding: const EdgeInsets.all(16),
+                      ),
+                      child: const Icon(
+                        Icons.send,
+                        size: 30,
+                      )),
                 ],
               ),
               const SizedBox(height: 16),
@@ -148,13 +174,16 @@ class _MyAppState extends State<MyApp> {
   void getDevice(Device device) {
     _bluetoothClassicPlugin.initBluetoothSocket(device.deviceHardwareAddress, "00001101-0000-1000-8000-00805F9B34FB");
     _bluetoothClassicPlugin.connectBluetoothSocket();
-    outputStream();
   }
 
-  void outputStream() {
-    List<int> list = 'vinst\r'.codeUnits;
-    Uint8List bytes = Uint8List.fromList(list);
-    _bluetoothClassicPlugin.outputStreamBluetoothSocket(bytes);
-    print(_bluetoothClassicPlugin.inputStreamBluetoothSocket());
+  Future<void> outputStream() async {
+    List<int> dataInt = [0x80, 0x00, 0x00, 0x80];
+    _bluetoothClassicPlugin.outputStreamBluetoothSocket(Uint8List.fromList(dataInt));
+    receiver();
+  }
+
+  Future<void> receiver() async {
+    Uint8List? uint8Lis = await _bluetoothClassicPlugin.inputStreamBluetoothSocket();
+    print(uint8Lis.toList());
   }
 }

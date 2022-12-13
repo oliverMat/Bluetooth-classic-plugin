@@ -73,7 +73,7 @@ class BluetoothClassic {
     return BluetoothClassicPlatform.instance.closeBluetoothSocket();
   }
 
-  Future<Int> inputStreamBluetoothSocket() {
+  Future<Uint8List> inputStreamBluetoothSocket() {
     return BluetoothClassicPlatform.instance.inputStreamBluetoothSocket();
   }
 
