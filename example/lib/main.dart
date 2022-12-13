@@ -34,52 +34,6 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
-  Future<void> initPlatformState() async {
-    try {
-      _bluetoothClassicPlugin.registerBroadcastReceiver();
-      _checkPermission = await _bluetoothClassicPlugin.checkPermission();
-      _isEnableBluetooth = await _bluetoothClassicPlugin.isEnableBluetooth();
-    } on PlatformException {
-      _checkPermission = false;
-      _isEnableBluetooth = false;
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _checkPermission;
-    });
-  }
-
-  Future<void> enableBluetooth() async {
-    try {
-      if (_checkPermission == true) {
-        _bluetoothClassicPlugin.enableBluetooth();
-      }
-    } on PlatformException {}
-
-    if (!mounted) return;
-
-    setState(() {});
-  }
-
-  Future<void> loadDevices() async {
-    try {
-      _bluetoothClassicPlugin.startDeviceDiscovery();
-      _bluetoothClassicPlugin.callPairedDevices();
-      _listDevices = _bluetoothClassicPlugin.listPairedDevices();
-    } on PlatformException {}
-
-    if (!mounted) return;
-
-    setState(() {
-      _listDevices;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -171,18 +125,80 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  Future<void> initPlatformState() async {
+    try {
+      _bluetoothClassicPlugin.registerBroadcastReceiver();
+      _checkPermission = await _bluetoothClassicPlugin.checkPermission();
+      _isEnableBluetooth = await _bluetoothClassicPlugin.isEnableBluetooth();
+    } on PlatformException {
+      _checkPermission = false;
+      _isEnableBluetooth = false;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _checkPermission;
+    });
+  }
+
+  Future<void> enableBluetooth() async {
+    try {
+      if (_checkPermission == true) {
+        _bluetoothClassicPlugin.enableBluetooth();
+      }
+    } catch (e) {
+      e.toString();
+    }
+
+    if (!mounted) return;
+
+    setState(() {});
+  }
+
+  Future<void> loadDevices() async {
+    try {
+      _bluetoothClassicPlugin.startDeviceDiscovery();
+      _bluetoothClassicPlugin.callPairedDevices();
+      _listDevices = _bluetoothClassicPlugin.listPairedDevices();
+    } catch (e) {
+      e.toString();
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _listDevices;
+    });
+  }
+
   void getDevice(Device device) {
-    _bluetoothClassicPlugin.initBluetoothSocket(device.deviceHardwareAddress, "00001101-0000-1000-8000-00805F9B34FB");
-    _bluetoothClassicPlugin.connectBluetoothSocket();
+    try {
+      _bluetoothClassicPlugin.initBluetoothSocket(device.deviceHardwareAddress, "00001101-0000-1000-8000-00805F9B34FB");
+      _bluetoothClassicPlugin.connectBluetoothSocket();
+    } catch (e) {
+     e.toString();
+    }
   }
 
   Future<void> outputStream() async {
-    _bluetoothClassicPlugin.outputStreamBluetoothSocket(Uint8List.fromList([0x80, 0x00, 0x00, 0x80]));
-    receiver();
+    try {
+      _bluetoothClassicPlugin.outputStreamBluetoothSocket(Uint8List.fromList([0x80, 0x00, 0x00, 0x80]));
+      receiver();
+    } catch (e) {
+      e.toString();
+    }
   }
 
   Future<void> receiver() async {
-    Uint8List? uint8Lis = await _bluetoothClassicPlugin.inputStreamBluetoothSocket();
-    print(uint8Lis.toList());
+    try {
+      Uint8List? unit8Lis = await _bluetoothClassicPlugin.inputStreamBluetoothSocket();
+      print(unit8Lis.toList());
+    } catch (e) {
+      e.toString();
+    }
   }
 }

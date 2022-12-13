@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:bluetooth_classic/constants.dart';
 import 'package:bluetooth_classic/model/Device.dart';

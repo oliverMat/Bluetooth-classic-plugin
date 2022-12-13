@@ -70,12 +70,10 @@ class BluetoothAdapter: BluetoothAdapterInterface {
 
     override fun callPairedDevices() {
         bluetoothAdapter?.bondedDevices?.forEach { device ->
-            val deviceName = device.name
-            val deviceHardwareAddress = device.address // MAC address
 
             val deviceObject = Gson().toJson(Device(
-                    name = deviceName,
-                    deviceHardwareAddress = deviceHardwareAddress,
+                    name = device.name,
+                    deviceHardwareAddress = device.address,
                     paired = true))
 
             if (!listPairedDevices.contains(deviceObject)) {
@@ -90,12 +88,10 @@ class BluetoothAdapter: BluetoothAdapterInterface {
             when (intent.action.toString()) {
                 BluetoothDevice.ACTION_FOUND -> {
                     val device: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
-                    val deviceName = device.name
-                    val deviceHardwareAddress = device.address // MAC address
 
                     val deviceObject = Gson().toJson(Device(
-                            name = deviceName,
-                            deviceHardwareAddress = deviceHardwareAddress,
+                            name = device.name,
+                            deviceHardwareAddress = device.address,
                             paired = false))
 
                     if (!listNewDevices.contains(deviceObject)) {

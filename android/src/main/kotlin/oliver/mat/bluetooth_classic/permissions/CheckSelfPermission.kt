@@ -13,7 +13,7 @@ object CheckSelfPermission {
     private const val PERMISSION_REQUEST = 1
 
     @RequiresApi(Build.VERSION_CODES.S)
-    private val PERMISSIONS_12 = arrayOf(
+    private val PERMISSIONS_ANDROID_12 = arrayOf(
             Manifest.permission.BLUETOOTH_CONNECT,
             Manifest.permission.BLUETOOTH_SCAN,
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -24,7 +24,7 @@ object CheckSelfPermission {
             Manifest.permission.ACCESS_FINE_LOCATION)
 
     @RequiresApi(Build.VERSION_CODES.S)
-    private fun checkSelf12 (activity: Activity) = ContextCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED &&
+    private fun checkSelfAndroid12 (activity: Activity) = ContextCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_SCAN) == PackageManager.PERMISSION_GRANTED &&
             ContextCompat.checkSelfPermission(activity, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED &&
             ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
             ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -44,10 +44,10 @@ object CheckSelfPermission {
                 ActivityCompat.requestPermissions(activity, PERMISSIONS, PERMISSION_REQUEST)
             }
         } else {
-            if (checkSelf12(activity)) {
+            if (checkSelfAndroid12(activity)) {
                 permission = true
             } else {
-                ActivityCompat.requestPermissions(activity, PERMISSIONS_12, PERMISSION_REQUEST)
+                ActivityCompat.requestPermissions(activity, PERMISSIONS_ANDROID_12, PERMISSION_REQUEST)
             }
         }
 
