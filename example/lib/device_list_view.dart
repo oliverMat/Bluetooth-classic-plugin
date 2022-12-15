@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
-import 'DeviceListItem.dart';
+import 'device_list_item.dart';
 
 class DeviceListView {
-
   final DeviceListItem _todoListItem = DeviceListItem();
 
   Widget deviceListViewBuilder(context, snapshot, getDevice) {
@@ -15,5 +14,4 @@ class DeviceListView {
       },
     );
   }
-
 }

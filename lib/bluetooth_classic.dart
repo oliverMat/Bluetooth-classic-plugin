@@ -1,11 +1,9 @@
-
 import 'dart:typed_data';
 
 import 'bluetooth_classic_platform_interface.dart';
 import 'package:bluetooth_classic/model/Device.dart';
 
 class BluetoothClassic {
-
   /// BluetoothAdapter */
   void initBluetoothAdapter() {
     return BluetoothClassicPlatform.instance.initBluetoothAdapter();

@@ -19,7 +19,8 @@ class DeviceListItem {
                 children: [
                   Text(
                     device.name,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   Text(
                     device.deviceHardwareAddress,
@@ -29,20 +30,21 @@ class DeviceListItem {
               ),
             ),
             ElevatedButton(
-                onPressed: () {
-                  if (device.paired) {
-                    getDevice(device);
-                  } else {
-                    null;
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueGrey,
-                ),
-                child: Icon(
-                  device.paired ? Icons.link : Icons.link_off,
-                  size: 30,
-                ),),
+              onPressed: () {
+                if (device.paired) {
+                  getDevice(device);
+                } else {
+                  null;
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueGrey,
+              ),
+              child: Icon(
+                device.paired ? Icons.link : Icons.link_off,
+                size: 30,
+              ),
+            ),
           ],
         ),
       ),

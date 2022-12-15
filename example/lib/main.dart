@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:bluetooth_classic/bluetooth_classic.dart';
 
-import 'DeviceListView.dart';
+import 'device_list_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -127,6 +127,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> initPlatformState() async {
     try {
+      _bluetoothClassicPlugin.initBluetoothAdapter();
       _bluetoothClassicPlugin.registerBroadcastReceiver();
       _checkPermission = await _bluetoothClassicPlugin.checkPermission();
       _isEnableBluetooth = await _bluetoothClassicPlugin.isEnableBluetooth();
@@ -177,16 +178,18 @@ class _MyAppState extends State<MyApp> {
 
   void getDevice(Device device) {
     try {
-      _bluetoothClassicPlugin.initBluetoothSocket(device.deviceHardwareAddress, "00001101-0000-1000-8000-00805F9B34FB");
+      _bluetoothClassicPlugin.initBluetoothSocket(
+          device.deviceHardwareAddress, "00001101-0000-1000-8000-00805F9B34FB");
       _bluetoothClassicPlugin.connectBluetoothSocket();
     } catch (e) {
-     e.toString();
+      e.toString();
     }
   }
 
   Future<void> outputStream() async {
     try {
-      _bluetoothClassicPlugin.outputStreamBluetoothSocket(Uint8List.fromList([0x80, 0x00, 0x00, 0x80]));
+      _bluetoothClassicPlugin.outputStreamBluetoothSocket(
+          Uint8List.fromList([0x80, 0x00, 0x00, 0x80]));
       receiver();
     } catch (e) {
       e.toString();
@@ -195,7 +198,8 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> receiver() async {
     try {
-      Uint8List? unit8Lis = await _bluetoothClassicPlugin.inputStreamBluetoothSocket();
+      Uint8List unit8Lis =
+          await _bluetoothClassicPlugin.inputStreamBluetoothSocket();
       print(unit8Lis.toList());
     } catch (e) {
       e.toString();

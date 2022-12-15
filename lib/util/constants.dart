@@ -1,5 +1,4 @@
 class Constants {
-
   static const bluetoothMethodChannel = 'bluetoothMethodChannel';
 
   /// BluetoothAdapter */
@@ -26,5 +25,4 @@ class Constants {
   static const inputStreamBluetoothSocket = 'inputStreamBluetoothSocket';
   static const outputStreamBluetoothSocket = 'outputStreamBluetoothSocket';
   static const argumentOutputStream = 'byteOutputStream';
-
 }

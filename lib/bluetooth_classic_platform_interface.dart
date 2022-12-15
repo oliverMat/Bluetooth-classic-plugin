@@ -28,7 +28,8 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
 
   /// BluetoothAdapter */
   void initBluetoothAdapter() {
-    throw UnimplementedError('initBluetoothAdapter() has not been implemented.');
+    throw UnimplementedError(
+        'initBluetoothAdapter() has not been implemented.');
   }
 
   Future<bool> checkPermission() {
@@ -48,7 +49,8 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
   }
 
   void startDeviceDiscovery() {
-    throw UnimplementedError('startDeviceDiscovery() has not been implemented.');
+    throw UnimplementedError(
+        'startDeviceDiscovery() has not been implemented.');
   }
 
   void stopDeviceDiscovery() {
@@ -68,11 +70,13 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
   }
 
   void registerBroadcastReceiver() {
-    throw UnimplementedError('registerBroadcastReceiver() has not been implemented.');
+    throw UnimplementedError(
+        'registerBroadcastReceiver() has not been implemented.');
   }
 
   void unregisterBroadcastReceiver() {
-    throw UnimplementedError('unregisterBroadcastReceiver() has not been implemented.');
+    throw UnimplementedError(
+        'unregisterBroadcastReceiver() has not been implemented.');
   }
 
   /// BluetoothSocket */
@@ -81,22 +85,27 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
   }
 
   Future<bool> isConnectBluetoothSocket() {
-    throw UnimplementedError('isConnectBluetoothSocket() has not been implemented.');
+    throw UnimplementedError(
+        'isConnectBluetoothSocket() has not been implemented.');
   }
 
   void connectBluetoothSocket() {
-    throw UnimplementedError('connectBluetoothSocket() has not been implemented.');
+    throw UnimplementedError(
+        'connectBluetoothSocket() has not been implemented.');
   }
 
   void closeBluetoothSocket() {
-    throw UnimplementedError('closeBluetoothSocket() has not been implemented.');
+    throw UnimplementedError(
+        'closeBluetoothSocket() has not been implemented.');
   }
 
   Future<Uint8List> inputStreamBluetoothSocket() {
-    throw UnimplementedError('inputStreamBluetoothSocket() has not been implemented.');
+    throw UnimplementedError(
+        'inputStreamBluetoothSocket() has not been implemented.');
   }
 
   Future<void> outputStreamBluetoothSocket(Uint8List byte) {
-    throw UnimplementedError('outputStreamBluetoothSocket() has not been implemented.');
+    throw UnimplementedError(
+        'outputStreamBluetoothSocket() has not been implemented.');
   }
 }
