@@ -6,7 +6,7 @@ object Constant {
 
     /** BluetoothAdapter */
     const val INIT_BLUETOOTH_ADAPTER = "initBluetoothAdapter"
-    const val CHECK_PERMISSION = "checkPermission"
+    const val IS_PERMISSIONS_GRANTED = "isPermissionsGranted"
     const val IS_ENABLE_BLUETOOTH = "isEnableBluetooth"
     const val IS_DISCOVERY_DEVICE = "isDiscoveryDevice"
     const val ENABLE_BLUETOOTH = "enableBluetooth"
@@ -15,8 +15,6 @@ object Constant {
     const val LIST_NEW_DEVICES = "listNewDevices"
     const val LIST_PAIRED_DEVICES = "listPairedDevices"
     const val CALL_PAIRED_DEVICES = "callPairedDevices"
-    const val REGISTER_BROADCAST_RECEIVER = "registerBroadcastReceiver"
-    const val UNREGISTER_BROADCAST_RECEIVER = "unregisterBroadcastReceiver"
 
     /** BluetoothSocket */
     const val INIT_BLUETOOTH_SOCKET = "initBluetoothSocket"
@@ -28,4 +26,7 @@ object Constant {
     const val INPUT_STREAM_BLUETOOTH_SOCKET = "inputStreamBluetoothSocket"
     const val OUTPUT_STREAM_BLUETOOTH_SOCKET = "outputStreamBluetoothSocket"
     const val ARGUMENT_OUTPUT_STREAM = "byteOutputStream"
+
+    /** CheckSelfPermission */
+    const val REQUIRE_PERMISSIONS = "requirePermission"
 }

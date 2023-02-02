@@ -8,33 +8,42 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.core.app.ActivityCompat.startActivityForResult
-import com.google.gson.Gson
-import oliver.mat.bluetooth_classic.model.Device
+import androidx.core.app.ActivityCompat
+import oliver.mat.bluetooth_classic.util.DeviceJsonFormat
 
-class BluetoothAdapter: BluetoothAdapterInterface {
+class BluetoothAdapter(private var activity: Activity) : BluetoothAdapterInterface {
 
     private var bluetoothAdapter: BluetoothAdapter? = null
     private var listNewDevices: MutableList<String> = mutableListOf()
     private var listPairedDevices: MutableList<String> = mutableListOf()
 
-    override fun initBluetoothAdapter(activity: Activity) {
+    override fun initBluetoothAdapter() {
         if (bluetoothAdapter == null) {
-            bluetoothAdapter = (activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
+            bluetoothAdapter =
+                (activity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
         }
     }
 
     override fun isEnableBluetooth(): Boolean {
-        return bluetoothAdapter!!.isEnabled
+        var isEnable = false
+        if (bluetoothAdapter != null) {
+            isEnable = bluetoothAdapter!!.isEnabled
+        }
+        return isEnable
     }
 
     override fun isDiscoveryDevice(): Boolean {
         return bluetoothAdapter!!.isDiscovering
     }
 
-    override fun enableBluetooth(activity: Activity) {
+    override fun enableBluetooth() {
         if (bluetoothAdapter?.isEnabled == false) {
-            startActivityForResult(activity, Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BLUETOOTH, null)
+            ActivityCompat.startActivityForResult(
+                activity,
+                Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),
+                REQUEST_ENABLE_BLUETOOTH,
+                null
+            )
         }
     }
 
@@ -47,19 +56,6 @@ class BluetoothAdapter: BluetoothAdapterInterface {
         bluetoothAdapter!!.cancelDiscovery()
     }
 
-    override fun registerBroadcastReceiver(activity: Activity) {
-        val filter = IntentFilter().apply {
-            addAction(BluetoothDevice.ACTION_FOUND)
-            addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
-        }
-
-        activity.registerReceiver(receiver, filter)
-    }
-
-    override fun unregisterBroadcastReceiver(activity: Activity) {
-        activity.unregisterReceiver(receiver)
-    }
-
     override fun listNewDevices(): List<String> {
         return listNewDevices
     }
@@ -69,12 +65,11 @@ class BluetoothAdapter: BluetoothAdapterInterface {
     }
 
     override fun callPairedDevices() {
+        clearList()
         bluetoothAdapter?.bondedDevices?.forEach { device ->
 
-            val deviceObject = Gson().toJson(Device(
-                    name = device.name,
-                    deviceHardwareAddress = device.address,
-                    paired = true))
+            val deviceObject =
+                DeviceJsonFormat.format(name = device.name, address = device.address, paired = true)
 
             if (!listPairedDevices.contains(deviceObject)) {
                 listPairedDevices.add(deviceObject)
@@ -82,17 +77,32 @@ class BluetoothAdapter: BluetoothAdapterInterface {
         }
     }
 
+    override fun registerBroadcastReceiver() {
+        val filter = IntentFilter().apply {
+            addAction(BluetoothDevice.ACTION_FOUND)
+            addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
+        }
+
+        activity.registerReceiver(receiver, filter)
+    }
+
+    override fun unregisterBroadcastReceiver() {
+        activity.unregisterReceiver(receiver)
+    }
+
     // Create a BroadcastReceiver for ACTION_FOUND.
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action.toString()) {
                 BluetoothDevice.ACTION_FOUND -> {
-                    val device: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
+                    val device: BluetoothDevice =
+                        intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
 
-                    val deviceObject = Gson().toJson(Device(
-                            name = device.name,
-                            deviceHardwareAddress = device.address,
-                            paired = false))
+                    val deviceObject = DeviceJsonFormat.format(
+                        name = device.name,
+                        address = device.address,
+                        paired = false
+                    )
 
                     if (!listNewDevices.contains(deviceObject)) {
                         listNewDevices.add(deviceObject)

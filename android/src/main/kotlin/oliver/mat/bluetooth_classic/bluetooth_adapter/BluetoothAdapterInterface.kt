@@ -4,25 +4,25 @@ import android.app.Activity
 
 interface BluetoothAdapterInterface {
 
-    fun initBluetoothAdapter(activity: Activity)
+    fun initBluetoothAdapter()
 
     fun isEnableBluetooth(): Boolean
 
     fun isDiscoveryDevice(): Boolean
 
-    fun enableBluetooth(activity: Activity)
+    fun enableBluetooth()
 
     fun startDeviceDiscovery()
 
     fun stopDeviceDiscovery()
-
-    fun registerBroadcastReceiver(activity: Activity)
-
-    fun unregisterBroadcastReceiver(activity: Activity)
 
     fun listNewDevices(): List<String>
 
     fun listPairedDevices(): List<String>
 
     fun callPairedDevices()
+
+    fun registerBroadcastReceiver()
+
+    fun unregisterBroadcastReceiver()
 }
