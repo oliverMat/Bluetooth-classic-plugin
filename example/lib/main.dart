@@ -25,9 +25,6 @@ class _MyAppState extends State<MyApp> {
 
   Future<List<Device>> _listDevices = Future(() => []);
 
-  bool _checkPermission = false;
-  bool _isEnableBluetooth = false;
-
   @override
   void initState() {
     super.initState();
@@ -43,78 +40,134 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Center(
             child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  ElevatedButton(
-                      onPressed: _isEnableBluetooth ? null : enableBluetooth,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        padding: const EdgeInsets.all(16),
-                      ),
-                      child: const Icon(
-                        Icons.bluetooth,
-                        size: 30,
-                      )),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                      onPressed: () {
-                        loadDevices();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        padding: const EdgeInsets.all(16),
-                      ),
-                      child: const Icon(
-                        Icons.change_circle_rounded,
-                        size: 30,
-                      )),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                      onPressed: () {
-                        _bluetoothClassicPlugin.closeBluetoothSocket();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        padding: const EdgeInsets.all(16),
-                      ),
-                      child: const Icon(
-                        Icons.close,
-                        size: 30,
-                      )),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                      onPressed: () {
-                        outputStream();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        padding: const EdgeInsets.all(16),
-                      ),
-                      child: const Icon(
-                        Icons.send,
-                        size: 30,
-                      )),
+                  const Text(
+                    'checkPermission :',
+                  ),
+                  StreamBuilder<bool>(
+                    stream: _bluetoothClassicPlugin.isPermissionsGranted(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(
+                          '${snapshot.data}',
+                          style: Theme.of(context).textTheme.headline4,
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    },
+                  ),
+                  const Text(
+                    'isEnableBluetooth :',
+                  ),
+                  StreamBuilder<bool>(
+                    stream: _bluetoothClassicPlugin.isEnableBluetooth(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(
+                          '${snapshot.data}',
+                          style: Theme.of(context).textTheme.headline4,
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    },
+                  ),
+                  const Text(
+                    'isConnectBluetoothSocket :',
+                  ),
+                  StreamBuilder<bool>(
+                    stream: _bluetoothClassicPlugin.isConnectBluetoothSocket(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(
+                          '${snapshot.data}',
+                          style: Theme.of(context).textTheme.headline4,
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    },
+                  ),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            enableBluetooth();
+                            setState(() {
+
+                            });
+                          } ,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            padding: const EdgeInsets.all(16),
+                          ),
+                          child: const Icon(
+                            Icons.bluetooth,
+                            size: 30,
+                          )),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                          onPressed: () {
+                            loadDevices();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            padding: const EdgeInsets.all(16),
+                          ),
+                          child: const Icon(
+                            Icons.change_circle_rounded,
+                            size: 30,
+                          )),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                          onPressed: () {
+                            _bluetoothClassicPlugin.closeBluetoothSocket();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            padding: const EdgeInsets.all(16),
+                          ),
+                          child: const Icon(
+                            Icons.close,
+                            size: 30,
+                          )),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+
+                            });
+                            outputStream();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            padding: const EdgeInsets.all(16),
+                          ),
+                          child: const Icon(
+                            Icons.send,
+                            size: 30,
+                          )),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Flexible(
+                    child: FutureBuilder<List>(
+                        future: _listDevices,
+                        initialData: const [],
+                        builder: (context, snapshot) {
+                          return snapshot.hasData
+                              ? _deviceListView.deviceListViewBuilder(
+                              context, snapshot, getDevice)
+                              : _waiting();
+                        }),
+                  ),
                 ],
               ),
-              const SizedBox(height: 16),
-              Flexible(
-                child: FutureBuilder<List>(
-                    future: _listDevices,
-                    initialData: const [],
-                    builder: (context, snapshot) {
-                      return snapshot.hasData
-                          ? _deviceListView.deviceListViewBuilder(
-                              context, snapshot, getDevice)
-                          : _waiting();
-                    }),
-              ),
-            ],
-          ),
-        )),
+            )),
       ),
     );
   }
@@ -128,12 +181,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     try {
       _bluetoothClassicPlugin.initBluetoothAdapter();
-      _bluetoothClassicPlugin.registerBroadcastReceiver();
-      _checkPermission = await _bluetoothClassicPlugin.checkPermission();
-      _isEnableBluetooth = await _bluetoothClassicPlugin.isEnableBluetooth();
     } on PlatformException {
-      _checkPermission = false;
-      _isEnableBluetooth = false;
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -142,15 +190,12 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _checkPermission;
     });
   }
 
   Future<void> enableBluetooth() async {
     try {
-      if (_checkPermission == true) {
-        _bluetoothClassicPlugin.enableBluetooth();
-      }
+      _bluetoothClassicPlugin.requirePermission();
     } catch (e) {
       e.toString();
     }
@@ -162,7 +207,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> loadDevices() async {
     try {
-      _bluetoothClassicPlugin.startDeviceDiscovery();
+      //_btFlutterPlugin.startDeviceDiscovery();
       _bluetoothClassicPlugin.callPairedDevices();
       _listDevices = _bluetoothClassicPlugin.listPairedDevices();
     } catch (e) {
@@ -198,8 +243,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> receiver() async {
     try {
-      Uint8List unit8Lis =
-          await _bluetoothClassicPlugin.inputStreamBluetoothSocket();
+      Uint8List unit8Lis = await _bluetoothClassicPlugin.inputStreamBluetoothSocket();
       print(unit8Lis.toList());
     } catch (e) {
       e.toString();
