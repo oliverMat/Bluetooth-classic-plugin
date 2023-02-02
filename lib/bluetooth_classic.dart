@@ -9,11 +9,11 @@ class BluetoothClassic {
     return BluetoothClassicPlatform.instance.initBluetoothAdapter();
   }
 
-  Future<bool> checkPermission() {
-    return BluetoothClassicPlatform.instance.checkPermission();
+  Stream<bool> isPermissionsGranted() {
+    return BluetoothClassicPlatform.instance.isPermissionsGranted();
   }
 
-  Future<bool> isEnableBluetooth() {
+  Stream<bool> isEnableBluetooth() {
     return BluetoothClassicPlatform.instance.isEnableBluetooth();
   }
 
@@ -45,20 +45,12 @@ class BluetoothClassic {
     return BluetoothClassicPlatform.instance.callPairedDevices();
   }
 
-  void registerBroadcastReceiver() {
-    return BluetoothClassicPlatform.instance.registerBroadcastReceiver();
-  }
-
-  void unregisterBroadcastReceiver() {
-    return BluetoothClassicPlatform.instance.unregisterBroadcastReceiver();
-  }
-
   /// BluetoothSocket */
   Future<void> initBluetoothSocket(String address, String uuid) {
     return BluetoothClassicPlatform.instance.initBluetoothSocket(address, uuid);
   }
 
-  Future<bool> isConnectBluetoothSocket() {
+  Stream<bool> isConnectBluetoothSocket() {
     return BluetoothClassicPlatform.instance.isConnectBluetoothSocket();
   }
 
@@ -76,5 +68,10 @@ class BluetoothClassic {
 
   Future<void> outputStreamBluetoothSocket(Uint8List byte) {
     return BluetoothClassicPlatform.instance.outputStreamBluetoothSocket(byte);
+  }
+
+  /// CheckSelfPermission */
+  void requirePermission() {
+    return BluetoothClassicPlatform.instance.requirePermission();
   }
 }

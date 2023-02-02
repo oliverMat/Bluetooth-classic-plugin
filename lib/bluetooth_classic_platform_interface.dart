@@ -32,11 +32,11 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
         'initBluetoothAdapter() has not been implemented.');
   }
 
-  Future<bool> checkPermission() {
+  Stream<bool> isPermissionsGranted() {
     throw UnimplementedError('checkPermission() has not been implemented.');
   }
 
-  Future<bool> isEnableBluetooth() {
+  Stream<bool> isEnableBluetooth() {
     throw UnimplementedError('isEnableBluetooth() has not been implemented.');
   }
 
@@ -69,22 +69,12 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
     throw UnimplementedError('callPairedDevices() has not been implemented.');
   }
 
-  void registerBroadcastReceiver() {
-    throw UnimplementedError(
-        'registerBroadcastReceiver() has not been implemented.');
-  }
-
-  void unregisterBroadcastReceiver() {
-    throw UnimplementedError(
-        'unregisterBroadcastReceiver() has not been implemented.');
-  }
-
   /// BluetoothSocket */
   Future<void> initBluetoothSocket(String address, String uuid) {
     throw UnimplementedError('initBluetoothSocket() has not been implemented.');
   }
 
-  Future<bool> isConnectBluetoothSocket() {
+  Stream<bool> isConnectBluetoothSocket() {
     throw UnimplementedError(
         'isConnectBluetoothSocket() has not been implemented.');
   }
@@ -107,5 +97,11 @@ abstract class BluetoothClassicPlatform extends PlatformInterface {
   Future<void> outputStreamBluetoothSocket(Uint8List byte) {
     throw UnimplementedError(
         'outputStreamBluetoothSocket() has not been implemented.');
+  }
+
+  /// CheckSelfPermission */
+  void requirePermission() {
+    throw UnimplementedError(
+        'requirePermission() has not been implemented.');
   }
 }

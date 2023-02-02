@@ -12,6 +12,10 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel(Constants.bluetoothMethodChannel);
 
+  static const EventChannel isPermissionsGrantedEvent = EventChannel(Constants.isPermissionsGranted);
+  static const EventChannel isEnableBluetoothEvent = EventChannel(Constants.isEnableBluetooth);
+  static const EventChannel isSocketConnectEvent = EventChannel(Constants.isConnectBluetoothSocket);
+
   /// BluetoothAdapter */
   @override
   void initBluetoothAdapter() async {
@@ -19,13 +23,17 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   }
 
   @override
-  Future<bool> checkPermission() async {
-    return await methodChannel.invokeMethod(Constants.checkPermission);
+  Stream<bool> isPermissionsGranted() async* {
+    await for (bool message in isPermissionsGrantedEvent.receiveBroadcastStream().map((message) => message)){
+      yield message;
+    }
   }
 
   @override
-  Future<bool> isEnableBluetooth() async {
-    return await methodChannel.invokeMethod(Constants.isEnableBluetooth);
+  Stream<bool> isEnableBluetooth() async* {
+    await for (bool message in isEnableBluetoothEvent.receiveBroadcastStream().map((message) => message)){
+      yield message;
+    }
   }
 
   @override
@@ -71,16 +79,6 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
     await methodChannel.invokeMethod(Constants.callPairedDevices);
   }
 
-  @override
-  void registerBroadcastReceiver() async {
-    await methodChannel.invokeMethod(Constants.registerBroadcastReceiver);
-  }
-
-  @override
-  void unregisterBroadcastReceiver() async {
-    await methodChannel.invokeMethod(Constants.unregisterBroadcastReceiver);
-  }
-
   /// BluetoothSocket */
   @override
   Future<void> initBluetoothSocket(String address, String uuid) async {
@@ -89,8 +87,10 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   }
 
   @override
-  Future<bool> isConnectBluetoothSocket() async {
-    return await methodChannel.invokeMethod(Constants.isConnectBluetoothSocket);
+  Stream<bool> isConnectBluetoothSocket() async* {
+    await for (bool message in isSocketConnectEvent.receiveBroadcastStream().map((message) => message)){
+      yield message;
+    }
   }
 
   @override
@@ -113,5 +113,11 @@ class MethodChannelBluetoothClassic extends BluetoothClassicPlatform {
   Future<void> outputStreamBluetoothSocket(Uint8List byte) async {
     await methodChannel.invokeMethod(Constants.outputStreamBluetoothSocket,
         {Constants.argumentOutputStream: byte});
+  }
+
+  /// CheckSelfPermission */
+  @override
+  void requirePermission() async {
+    await methodChannel.invokeMethod(Constants.requirePermission);
   }
 }

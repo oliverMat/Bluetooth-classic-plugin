@@ -3,7 +3,7 @@ class Constants {
 
   /// BluetoothAdapter */
   static const initBluetoothAdapter = 'initBluetoothAdapter';
-  static const checkPermission = 'checkPermission';
+  static const isPermissionsGranted = 'isPermissionsGranted';
   static const isEnableBluetooth = 'isEnableBluetooth';
   static const isDiscoveryDevice = 'isDiscoveryDevice';
   static const enableBluetooth = 'enableBluetooth';
@@ -12,8 +12,6 @@ class Constants {
   static const listNewDevices = 'listNewDevices';
   static const listPairedDevices = 'listPairedDevices';
   static const callPairedDevices = 'callPairedDevices';
-  static const registerBroadcastReceiver = 'registerBroadcastReceiver';
-  static const unregisterBroadcastReceiver = 'unregisterBroadcastReceiver';
 
   /// BluetoothSocket */
   static const initBluetoothSocket = 'initBluetoothSocket';
@@ -25,4 +23,7 @@ class Constants {
   static const inputStreamBluetoothSocket = 'inputStreamBluetoothSocket';
   static const outputStreamBluetoothSocket = 'outputStreamBluetoothSocket';
   static const argumentOutputStream = 'byteOutputStream';
+
+  /// CheckSelfPermission */
+  static const requirePermission = 'requirePermission';
 }
